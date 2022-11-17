@@ -53,9 +53,9 @@ class _MySplashScreenState extends State<MySplashScreen>  {
                 children: const [
 
                   Image(
-                    image: AssetImage('images/logo.png'),
+                    image: AssetImage('images/logo-large.png'),
                     width: 500.0,
-                    fit: BoxFit.fitHeight,
+                    fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
                   ),
 
