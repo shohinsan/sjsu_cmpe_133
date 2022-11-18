@@ -38,6 +38,7 @@ dependencies:
   firebase_auth: ^4.1.2
   firebase_database: ^10.0.5
   fluttertoast: ^8.1.1
+  google_maps_flutter: ^2.2.1
 
 dev_dependencies:
   flutter_test:
@@ -62,22 +63,22 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-assets:
-  - images/car_android.png
-  - images/car_ios.png
-  - images/carpool.png
-  - images/carpool1.png
-  - images/desticon.png
-  - images/desticon1.png
-  - images/logo.png
-  - images/logo-large.png
-  - images/main-screen.png
-  - images/pickicon.png
-  - images/pickmarker.png
-  - images/posimarker.png
-  - images/posimarker1.png
-  - images/redmarker.png
-  - images/user_icon.png
+  assets:
+    - images/car_android.png
+    - images/car_ios.png
+    - images/carpool.png
+    - images/carpool1.png
+    - images/desticon.png
+    - images/desticon1.png
+    - images/logo.png
+    - images/logo-large.png
+    - images/main-screen.png
+    - images/pickicon.png
+    - images/pickmarker.png
+    - images/posimarker.png
+    - images/posimarker1.png
+    - images/redmarker.png
+    - images/user_icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

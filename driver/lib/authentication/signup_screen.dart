@@ -101,7 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xff095d61),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -112,7 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Image.asset("images/logo1.png"),
+                child: Image.asset("images/logo-large.png"),
               ),
 
               const SizedBox(height: 10,),
@@ -121,110 +121,118 @@ class _SignUpScreenState extends State<SignUpScreen>
                 "Register as a Driver",
                 style: TextStyle(
                   fontSize: 26,
-                  color: Colors.grey,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
 
+              const SizedBox(height: 20,),
+
+
               TextField(
                 controller: nameTextEditingController,
                 style: const TextStyle(
-                  color: Colors.grey
+                    color: Colors.white
                 ),
                 decoration: const InputDecoration(
                   labelText: "Name",
-                  hintText: "Name",
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
                   hintStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 10,
                   ),
                   labelStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 14,
                   ),
                 ),
               ),
+
+              const SizedBox(height: 20,),
+
 
               TextField(
                 controller: emailTextEditingController,
                 keyboardType: TextInputType.emailAddress,
                 style: const TextStyle(
-                    color: Colors.grey
+                    color: Colors.white
                 ),
                 decoration: const InputDecoration(
                   labelText: "Email",
-                  hintText: "Email",
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
                   hintStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 10,
                   ),
                   labelStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 14,
                   ),
                 ),
               ),
 
+              const SizedBox(height: 20,),
+
+
               TextField(
                 controller: phoneTextEditingController,
                 keyboardType: TextInputType.phone,
                 style: const TextStyle(
-                    color: Colors.grey
+                    color: Colors.white
                 ),
                 decoration: const InputDecoration(
                   labelText: "Phone",
-                  hintText: "Phone",
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
                   hintStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 10,
                   ),
                   labelStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 14,
                   ),
                 ),
               ),
+
+              const SizedBox(height: 20,),
+
 
               TextField(
                 controller: passwordTextEditingController,
                 keyboardType: TextInputType.text,
                 obscureText: true,
                 style: const TextStyle(
-                    color: Colors.grey
+                    color: Colors.white
                 ),
                 decoration: const InputDecoration(
                   labelText: "Password",
-                  hintText: "Password",
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
                   hintStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 10,
                   ),
                   labelStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 14,
                   ),
                 ),
@@ -238,21 +246,26 @@ class _SignUpScreenState extends State<SignUpScreen>
                   validateForm();
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.lightGreenAccent,
+                  primary: const Color(0xFF4FBDB6),
+                  minimumSize: const Size.fromHeight(50),
                 ),
+
                 child: const Text(
                   "Create Account",
                   style: TextStyle(
-                    color: Colors.black54,
+                    color: Colors.white,
                     fontSize: 18,
                   ),
                 ),
               ),
 
+              const SizedBox(height: 20,),
+
+
               TextButton(
                 child: const Text(
                   "Already have an Account? Login Here",
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Colors.white),
                 ),
                 onPressed: ()
                 {

@@ -11,7 +11,7 @@ class RatingsTabPage extends StatefulWidget {
 class _RatingsTabPageState extends State<RatingsTabPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         "Ratings"
       ),

@@ -5,7 +5,7 @@ import 'package:driver/screens/home_tab.dart';
 import 'package:driver/authentication/login_screen.dart';
 import 'package:driver/authentication/signup_screen.dart';
 import 'package:driver/global/global.dart';
-import 'package:driver/screens/main_screen.dart';
+import 'package:driver/screens/tabs_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../global/global.dart';
@@ -23,7 +23,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
       if (await fAuth.currentUser != null) {
         currentFirebaseUser = fAuth.currentUser;
         Navigator.push(
-            context, MaterialPageRoute(builder: (c) => HomeTabPage()));
+            context, MaterialPageRoute(builder: (c) => TabsController()));
       } else {
         Navigator.push(
             context, MaterialPageRoute(builder: (c) => LoginScreen()));
@@ -40,27 +40,50 @@ class _MySplashScreenState extends State<MySplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // 095D61FF
     return Material(
-      // --- background color ---
       child: Container(
-        color: const Color.fromRGBO(7, 95, 99, 100),
-        // --- Logo and Title ---
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("images/logo1.png"),
-              const SizedBox(
-                height: 10,
+        color: const Color(0xff095d61),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Center(
+
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+
+                  Image(
+                    image: AssetImage('images/logo-large.png'),
+                    width: 500.0,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  ),
+
+                  Text(
+                    "S P A R T A N",
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+
+                  SizedBox(height: 10,),
+
+                  Text(
+                    "S H A R E",
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+
+                ],
               ),
-              const Text(
-                "SpartanShare",
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
+            ),
           ),
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:driver/global/global.dart';
 import 'package:driver/splash/splash_screen.dart';
 import 'package:driver/widgets/progress_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -67,9 +68,23 @@ class _LoginScreenState extends State<LoginScreen>
 
     if(firebaseUser != null)
     {
-      currentFirebaseUser = firebaseUser;
-      Fluttertoast.showToast(msg: "Login Successful.");
-      Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+
+      DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("drivers");
+      driversRef.child(firebaseUser.uid).once().then((driverKey) {
+          final snap = driverKey.snapshot;
+          if (snap.value != null) {
+              currentFirebaseUser = firebaseUser;
+              Fluttertoast.showToast(msg: "Login Successful.");
+              Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+          }
+          else {
+            Fluttertoast.showToast(msg: "No record exists for this user. Please create new account.");
+            fAuth.signOut();
+            Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+          }
+          });
+
+
     }
     else
     {
@@ -81,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xff095d61),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -92,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen>
 
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Image.asset("images/logo1.png"),
+                child: Image.asset("images/logo-large.png"),
               ),
 
               const SizedBox(height: 10,),
@@ -101,59 +116,64 @@ class _LoginScreenState extends State<LoginScreen>
                 "Login as a Driver",
                 style: TextStyle(
                   fontSize: 26,
-                  color: Colors.grey,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
+
+              // Email Field
+              const SizedBox(height: 20,),
 
               TextField(
                 controller: emailTextEditingController,
                 keyboardType: TextInputType.emailAddress,
                 style: const TextStyle(
-                    color: Colors.grey
+                    color: Colors.white
                 ),
                 decoration: const InputDecoration(
                   labelText: "Email",
-                  hintText: "Email",
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
                   hintStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 10,
                   ),
                   labelStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 14,
                   ),
                 ),
               ),
+
+              // Password Field
+              const SizedBox(height: 20,),
 
               TextField(
                 controller: passwordTextEditingController,
                 keyboardType: TextInputType.text,
                 obscureText: true,
                 style: const TextStyle(
-                    color: Colors.grey
+                    color: Colors.white
                 ),
                 decoration: const InputDecoration(
                   labelText: "Password",
-                  hintText: "Password",
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
                   hintStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 10,
                   ),
                   labelStyle: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.white,
                     fontSize: 14,
                   ),
                 ),
@@ -167,21 +187,27 @@ class _LoginScreenState extends State<LoginScreen>
                   validateForm();
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.lightGreenAccent,
+                  primary: const Color(0xFF4FBDB6),
+                  minimumSize: const Size.fromHeight(50), // NEW
+
                 ),
+
                 child: const Text(
                   "Login",
                   style: TextStyle(
-                    color: Colors.black54,
+                    color: Colors.white,
                     fontSize: 18,
                   ),
                 ),
               ),
 
+              const SizedBox(height: 20,),
+
+
               TextButton(
                 child: const Text(
                   "Do not have an Account? SignUp Here",
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Colors.white),
                 ),
                 onPressed: ()
                 {
