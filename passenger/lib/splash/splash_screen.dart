@@ -4,6 +4,8 @@ import 'package:passenger/authentication/login_screen.dart';
 import 'package:passenger/global/global.dart';
 import 'package:passenger/screens/main_screen.dart';
 
+import '../helper/helper_methods.dart';
+
 
 class MySplashScreen extends StatefulWidget  {
   const MySplashScreen({Key? key}) : super(key: key);
@@ -18,6 +20,9 @@ class MySplashScreen extends StatefulWidget  {
 class _MySplashScreenState extends State<MySplashScreen>  {
 
   startTimer() {
+
+    fAuth.currentUser != null ? HelperMethods.readCurrentOnlineUserInfo() : null;
+
     Timer(const Duration(seconds: 3), () async {
       if(await fAuth.currentUser != null) {
         currentFirebaseUser = fAuth.currentUser;

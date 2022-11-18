@@ -66,8 +66,7 @@ class _LoginScreenState extends State<LoginScreen>
         })
     ).user;
 
-    if(firebaseUser != null)
-    {
+    if(firebaseUser != null) {
 
       DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("drivers");
       driversRef.child(firebaseUser.uid).once().then((driverKey) {
