@@ -1,7 +1,8 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:passenger/splash/splash_screen.dart';
+import 'package:provider/provider.dart';
+import 'info_handler/app_info.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,13 +10,16 @@ void main() async {
 
   runApp(
     MyApp(
-      child: MaterialApp(
-        title: 'Drivers App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      child: ChangeNotifierProvider(
+        create: (context) => AppInfo(),
+        child: MaterialApp(
+          title: 'Drivers App',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: const MySplashScreen(),
+          debugShowCheckedModeBanner: false,
         ),
-        home: const MySplashScreen(),
-        debugShowCheckedModeBanner: false,
       ),
     ),
   );
@@ -26,8 +30,7 @@ class MyApp extends StatefulWidget {
 
   MyApp({this.child});
 
-  static void restartApp(BuildContext context)
-  {
+  static void restartApp(BuildContext context) {
     context.findAncestorStateOfType<_MyAppState>()!.restartApp();
   }
 

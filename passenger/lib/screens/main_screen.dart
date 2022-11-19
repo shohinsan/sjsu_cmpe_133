@@ -6,7 +6,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:passenger/authentication/login_screen.dart';
 import 'package:passenger/global/global.dart';
 import 'package:passenger/helper/helper_methods.dart';
+import 'package:passenger/screens/search_screen.dart';
 import 'package:passenger/widgets/my_drawer.dart';
+
+import 'package:provider/provider.dart';
+import '../info_handler/app_info.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -138,7 +142,6 @@ class _MainScreenState extends State<MainScreen> {
 
   LocationPermission? _locationPermission;
 
-
   double bottomPaddingOfMap = 0;
 
   checkIfLocationPermissionAllowed() async {
@@ -148,7 +151,6 @@ class _MainScreenState extends State<MainScreen> {
       _locationPermission = await Geolocator.requestPermission();
     }
   }
-
 
   locateUserPosition() async {
     Position currPosition = await Geolocator.getCurrentPosition(
@@ -162,6 +164,11 @@ class _MainScreenState extends State<MainScreen> {
         CameraPosition(target: latLngPosition, zoom: 14);
     newGoogleMapController!
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+
+    String humanReadableAddress =
+        await HelperMethods.searchAddressForGeographicCoordinates(
+            userCurrentPosition!, context);
+    print("This is your current position = $humanReadableAddress");
   }
 
   @override
@@ -222,8 +229,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-          
-          
+
           // UI For Searching Destination
           Positioned(
             bottom: 0,
@@ -249,12 +255,14 @@ class _MainScreenState extends State<MainScreen> {
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
                   child: Column(
                     children: [
-                      //from
+
+
+                      // Source Location Area
 
                       Row(
                         children: [
                           const Icon(
-                            Icons.add_location_alt_outlined,
+                            Icons.circle_outlined,
                             color: Colors.white,
                           ),
                           const SizedBox(
@@ -262,16 +270,20 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                "From",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 12),
+                            children:  [
+                              const Text(
+                                "Source",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 4.0,
                               ),
                               Text(
-                                "your current location",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 14),
+                                Provider.of<AppInfo>(context).userPickUpLocation != null
+                                    ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0,24)}..."
+                                    : "",
+                                style: const TextStyle(color: Colors.white, fontSize: 14),
                               ),
                             ],
                           ),
@@ -288,32 +300,42 @@ class _MainScreenState extends State<MainScreen> {
 
                       const SizedBox(height: 16.0),
 
-                      //to
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.add_location_alt_outlined,
-                            color: Colors.white,
-                          ),
-                          const SizedBox(
-                            width: 12.0,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                "To",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 12),
-                              ),
-                              Text(
-                                "Where to go?",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ],
+                      // Destination Location Area
+
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  SearchPlacesScreen()));
+
+                        },
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(
+                              width: 12.0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "Destination",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                ),
+                                SizedBox(
+                                  height: 4.0,
+                                ),
+                                Text(
+                                  "North Parking Garage",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
 
                       const SizedBox(height: 10.0),
@@ -323,8 +345,6 @@ class _MainScreenState extends State<MainScreen> {
                         thickness: 1,
                         color: Colors.white,
                       ),
-
-
 
                       const SizedBox(height: 16.0),
 
@@ -345,14 +365,6 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-          
-          
-          
-          
-          
-          
-          
-          
         ],
       ),
     );
