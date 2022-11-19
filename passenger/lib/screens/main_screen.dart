@@ -281,7 +281,7 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                               Text(
                                 Provider.of<AppInfo>(context).userPickUpLocation != null
-                                    ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0,24)}..."
+                                    ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0,18)}..."
                                     : "",
                                 style: const TextStyle(color: Colors.white, fontSize: 14),
                               ),
@@ -304,8 +304,15 @@ class _MainScreenState extends State<MainScreen> {
 
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  SearchPlacesScreen()));
+                          var responseFromSearchScreen = Navigator.push(context, MaterialPageRoute(builder: (context) =>  SearchPlacesScreen()));
 
+                          if(responseFromSearchScreen != null){
+                            responseFromSearchScreen.then((value) {
+                              if(value == "obtainedDropoff"){
+                                // draw routes / polyline
+                              }
+                            });
+                          }
                         },
                         child: Row(
                           children: [
@@ -318,18 +325,20 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
+                              children: [
+                                const Text(
                                   "Destination",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 12),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 4.0,
                                 ),
                                 Text(
-                                  "North Parking Garage",
-                                  style: TextStyle(
+                                  Provider.of<AppInfo>(context, listen: false).userDropOffLocation != null
+                                      ? "${(Provider.of<AppInfo>(context, listen: false).userDropOffLocation!.locationName!).substring(0,18)}..."
+                                      : "Where to go?",
+                                  style: const TextStyle(
                                       color: Colors.white, fontSize: 14),
                                 ),
                               ],

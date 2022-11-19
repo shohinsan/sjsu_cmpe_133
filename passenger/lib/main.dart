@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:passenger/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
+
 import 'info_handler/app_info.dart';
 
 void main() async {
