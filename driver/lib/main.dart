@@ -1,15 +1,15 @@
+import 'package:driver/info_handler/app_info.dart';
+import 'package:driver/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:passenger/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
-import 'info_handler/app_info.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   runApp(
-    MyApp(
+    AppLauncher(
       child: ChangeNotifierProvider(
         create: (context) => AppInfo(),
         child: MaterialApp(
@@ -25,20 +25,20 @@ void main() async {
   );
 }
 
-class MyApp extends StatefulWidget {
+class AppLauncher extends StatefulWidget {
   final Widget? child;
 
-  MyApp({this.child});
+  const AppLauncher({this.child});
 
   static void restartApp(BuildContext context) {
-    context.findAncestorStateOfType<_MyAppState>()!.restartApp();
+    context.findAncestorStateOfType<_AppLauncherState>()!.restartApp();
   }
 
   @override
-  _MyAppState createState() => _MyAppState();
+  _AppLauncherState createState() => _AppLauncherState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _AppLauncherState extends State<AppLauncher> {
   Key key = UniqueKey();
 
   void restartApp() {

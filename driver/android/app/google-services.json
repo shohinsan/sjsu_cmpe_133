@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "776301861445",
+    "firebase_url": "https://carpool-app-924a1-default-rtdb.firebaseio.com",
+    "project_id": "carpool-app-924a1",
+    "storage_bucket": "carpool-app-924a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776301861445:android:f2990dcfbc8f888fa1e12c",
+        "android_client_info": {
+          "package_name": "com.spartanshare.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776301861445-3kslthpummgv73oeftp21hi92gt8j53u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-xJh96y1PuoItso4B_WO_8_JLbrGXJD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776301861445-3kslthpummgv73oeftp21hi92gt8j53u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "776301861445-m3bbi5ad3lshvh4blhvj2nmf5a36h3d4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spartanshare.driver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776301861445:android:f6562181dba5b3efa1e12c",
+        "android_client_info": {
+          "package_name": "com.spartanshare.passenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776301861445-3kslthpummgv73oeftp21hi92gt8j53u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-xJh96y1PuoItso4B_WO_8_JLbrGXJD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776301861445-3kslthpummgv73oeftp21hi92gt8j53u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "776301861445-m3bbi5ad3lshvh4blhvj2nmf5a36h3d4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spartanshare.driver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

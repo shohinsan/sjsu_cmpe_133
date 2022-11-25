@@ -70,7 +70,6 @@ class _TabsControllerState extends State<TabsController> with SingleTickerProvid
               icon: Icon(Icons.person),
               label: "Account",
             ),
-
           ],
 
           unselectedItemColor: const Color(0xFF4FBDB6),

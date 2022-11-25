@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:passenger/global/global.dart';
 import 'package:passenger/splash/splash_screen.dart';
 
+import '../screens/about_screen.dart';
+import '../screens/profile_screen.dart';
+import '../screens/trips_history_screen.dart';
+
 class MyDrawer extends StatefulWidget {
   String? name;
   String? email;
 
-  MyDrawer({Key? key, this.name, this.email}) : super(key: key);
+  MyDrawer({this.name, this.email});
 
   @override
-  State<MyDrawer> createState() => _MyDrawerState();
+  _MyDrawerState createState() => _MyDrawerState();
 }
 
 class _MyDrawerState extends State<MyDrawer> {
@@ -18,120 +22,123 @@ class _MyDrawerState extends State<MyDrawer> {
     return Drawer(
       child: ListView(
         children: [
-          // Drawer Header
+          //drawer header
           Container(
             height: 165,
-            color: const Color(0xFF4FBDB6),
+            color: Colors.grey,
             child: DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color(0xff095d61),
+              decoration: const BoxDecoration(color: Colors.black),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.person,
+                    size: 80,
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.name.toString(),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        widget.email.toString(),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              child: Row(children: [
-                const Icon(
-                  Icons.person,
-                  color: Colors.white,
-                  size: 80,
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      widget.name.toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      widget.email.toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                )
-              ]),
             ),
           ),
 
-          // Drawer Body
+          const SizedBox(
+            height: 12.0,
+          ),
 
-
+          //drawer body
           GestureDetector(
             onTap: () {
-
-              },
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (c) => TripsHistoryScreen()));
+            },
             child: const ListTile(
               leading: Icon(
                 Icons.history,
-                color: Colors.white,
+                color: Colors.white54,
               ),
               title: Text(
                 "History",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white54),
               ),
             ),
           ),
 
           GestureDetector(
             onTap: () {
-
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (c) => ProfileScreen()));
             },
             child: const ListTile(
               leading: Icon(
                 Icons.person,
-                color: Colors.white,
+                color: Colors.white54,
               ),
               title: Text(
-                "Profile",
-                style: TextStyle(color: Colors.white),
+                "Visit Profile",
+                style: TextStyle(color: Colors.white54),
               ),
             ),
           ),
 
           GestureDetector(
             onTap: () {
-
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (c) => AboutScreen()));
             },
             child: const ListTile(
               leading: Icon(
                 Icons.info,
-                color: Colors.white,
+                color: Colors.white54,
               ),
               title: Text(
                 "About",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white54),
               ),
             ),
           ),
-
 
           GestureDetector(
             onTap: () {
               fAuth.signOut();
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const MySplashScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (c) => const MySplashScreen()));
             },
             child: const ListTile(
               leading: Icon(
                 Icons.logout,
-                color: Colors.white,
+                color: Colors.white54,
               ),
               title: Text(
                 "Sign Out",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white54),
               ),
             ),
           ),
-
-
-
-
-
-
         ],
       ),
     );
