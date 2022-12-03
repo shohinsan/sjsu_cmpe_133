@@ -10,7 +10,10 @@ import 'package:passenger/widgets/progress_dialog.dart';
 
 class SignUpScreen extends StatefulWidget
 {
+  const SignUpScreen({Key? key}) : super(key: key);
+
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
@@ -65,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         password: passwordTextEditingController.text.trim(),
       ).catchError((msg){
         Navigator.pop(context);
-        Fluttertoast.showToast(msg: "Error: " + msg.toString());
+        Fluttertoast.showToast(msg: "Error: $msg");
       })
     ).user;
 
@@ -84,10 +87,12 @@ class _SignUpScreenState extends State<SignUpScreen>
 
       currentFirebaseUser = firebaseUser;
       Fluttertoast.showToast(msg: "Account has been Created.");
-      Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen()));
+      // ignore: use_build_context_synchronously
+      Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
     }
     else
     {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       Fluttertoast.showToast(msg: "Account has not been Created.");
     }
@@ -262,7 +267,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                 ),
                 onPressed: ()
                 {
-                  Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (c)=> const LoginScreen()));
                 },
               ),
 

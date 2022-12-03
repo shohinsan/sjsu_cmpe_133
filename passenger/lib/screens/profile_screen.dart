@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:passenger/global/global.dart';
+import 'package:passenger/screens/main_screen.dart';
 import 'package:passenger/widgets/info_design_ui.dart';
+
+import '../widgets/my_drawer.dart';
+
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -12,7 +16,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF4FBDB6),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               userModelCurrentInfo!.name!,
               style: const TextStyle(
                 fontSize: 50.0,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -31,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 20,
               width: 200,
               child: Divider(
-                color: Colors.white,
+                color: Colors.black,
                 height: 2,
                 thickness: 2,
               ),
@@ -59,14 +63,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             ElevatedButton(
               onPressed: () {
-                SystemNavigator.pop();
+                Navigator.pop(context, MaterialPageRoute(builder: (c)=>  MyDrawer()));
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.white54,
+                primary: Colors.red,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 145,
+                    vertical: 20
+                ),
               ),
               child: const Text(
                 "Close",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
               ),
             )
           ],

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../global/global.dart';
+import '../helper/helper_methods.dart';
+import '../screens/new_trip_screen.dart';
 
 
 class FareAmountCollectionDialog extends StatefulWidget
@@ -27,12 +29,12 @@ class _FareAmountCollectionDialogState extends State<FareAmountCollectionDialog>
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
       ),
-      backgroundColor: Colors.grey,
+
       child: Container(
         margin: const EdgeInsets.all(6),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.black87,
+          color: const Color(0xF2F2F9F9),
           borderRadius: BorderRadius.circular(6),
         ),
         child: Column(
@@ -42,10 +44,10 @@ class _FareAmountCollectionDialogState extends State<FareAmountCollectionDialog>
             const SizedBox(height: 20,),
 
             Text(
-              "Trip Fare Amount " + "(" + driverVehicleType!.toUpperCase() + ")",
+              "TRIP FARE AMOUNT (${driverVehicleType!.toUpperCase()})",
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.grey,
+                color: Colors.black,
                 fontSize: 16,
               ),
             ),
@@ -54,16 +56,17 @@ class _FareAmountCollectionDialogState extends State<FareAmountCollectionDialog>
 
             const Divider(
               thickness: 4,
-              color: Colors.grey,
+              color: Colors.white,
             ),
 
             const SizedBox(height: 16,),
 
             Text(
+              // "\$ ${HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetails!).toStringAsFixed(2)}",
               widget.totalFareAmount.toString(),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.grey,
+                color: Colors.black,
                 fontSize: 50,
               ),
             ),
@@ -73,10 +76,10 @@ class _FareAmountCollectionDialogState extends State<FareAmountCollectionDialog>
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                "This is the total trip amount, Please it Collect from user.",
+                "This is the total trip amount. Collect!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.grey,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -108,7 +111,8 @@ class _FareAmountCollectionDialogState extends State<FareAmountCollectionDialog>
                       ),
                     ),
                     Text(
-                      "\$  " + widget.totalFareAmount!.toString(),
+                      // "\$ ${HelperMethods.calculateFareAmountFromOriginToDestination(directionDetailsInfo!).toStringAsFixed(2)}",
+                      "\$  ${widget.totalFareAmount!}",  //
                       style: const TextStyle(
                         fontSize: 20,
                         color: Colors.white,

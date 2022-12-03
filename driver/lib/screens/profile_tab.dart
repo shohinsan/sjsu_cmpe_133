@@ -1,5 +1,4 @@
 import 'package:driver/global/global.dart';
-import 'package:driver/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,7 +19,7 @@ class _ProfileTabPageState extends State<ProfileTabPage>
   Widget build(BuildContext context)
   {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor:  const Color(0xFF4FBDB6),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -28,20 +27,20 @@ class _ProfileTabPageState extends State<ProfileTabPage>
 
             //name
             Text(
-              onlineDriverData.name!,
+              onlineDriverData!.name!,
               style: const TextStyle(
                 fontSize: 50.0,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
 
 
             Text(
-              titleStarsRating + " driver",
+              "$titleStarsRating driver",
               style: const TextStyle(
                 fontSize: 18.0,
-                color: Colors.grey,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -50,13 +49,14 @@ class _ProfileTabPageState extends State<ProfileTabPage>
               height: 20,
               width: 200,
               child: Divider(
-                color: Colors.white,
+                color: Colors.black,
                 height: 2,
                 thickness: 2,
               ),
             ),
 
             const SizedBox(height: 38.0,),
+
 
             //phone
             InfoDesignUIWidget(
@@ -71,12 +71,14 @@ class _ProfileTabPageState extends State<ProfileTabPage>
             ),
 
             InfoDesignUIWidget(
-              textInfo: onlineDriverData.car_color! + " " + onlineDriverData.car_model! + " " +  onlineDriverData.car_number!,
+              textInfo: "${onlineDriverData.car_color!} ${onlineDriverData.car_model!} ${onlineDriverData.car_number!}",
               iconData: Icons.car_repair,
             ),
 
+
+
             const SizedBox(
-              height: 20,
+              height: 50,
             ),
 
             ElevatedButton(
@@ -87,10 +89,14 @@ class _ProfileTabPageState extends State<ProfileTabPage>
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.redAccent,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 140,
+                    vertical: 20
+                ),
               ),
               child: const Text(
                 "Logout",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
               ),
             )
 

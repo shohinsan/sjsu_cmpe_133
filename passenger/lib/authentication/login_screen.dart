@@ -10,8 +10,11 @@ import 'package:passenger/widgets/progress_dialog.dart';
 
 class LoginScreen extends StatefulWidget
 {
+  const LoginScreen({Key? key}) : super(key: key);
+
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -57,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen>
           password: passwordTextEditingController.text.trim(),
         ).catchError((msg){
           Navigator.pop(context);
-          Fluttertoast.showToast(msg: "Error: " + msg.toString());
+          Fluttertoast.showToast(msg: "Error: $msg");
         })
     ).user;
 
@@ -81,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen>
     }
     else
     {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       Fluttertoast.showToast(msg: "Error Occurred during Login.");
     }
@@ -206,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen>
                 ),
                 onPressed: ()
                 {
-                  Navigator.push(context, MaterialPageRoute(builder: (c)=> SignUpScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (c)=> const SignUpScreen()));
                 },
               ),
 

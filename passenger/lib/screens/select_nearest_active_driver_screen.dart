@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:passenger/helper/helper_methods.dart';
+import 'package:passenger/splash/splash_screen.dart';
 import 'package:smooth_star_rating_nsafe/smooth_star_rating.dart';
 
 import '../global/global.dart';
+import 'main_screen.dart';
 
 class SelectNearestActiveDriversScreen extends StatefulWidget {
   DatabaseReference? referenceRideRequest;
@@ -18,22 +20,22 @@ class SelectNearestActiveDriversScreen extends StatefulWidget {
 
 class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDriversScreen> {
 
-  String fareAmount = "";
+  String fareAmount = "\$${HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!)}";     //\$${HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!)}
 
   getFareAmountAccordingToVehicleType(int index) {
     if(tripDirectionDetailsInfo != null) {
-      if(dList[index]["car_details"]["type"].toString() == "car") {
-        fareAmount = (HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!) / 2).toStringAsFixed(2);
+      if(dList[index]["car_details"]["type"].toString() == "Car") {
+        fareAmount = (HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!)).toStringAsFixed(2);  //cents 0.72
       }
 
-      if(dList[index]["car_details"]["type"].toString() == "minibus") //means executive type of car - more comfortable pro level
-          {
-        fareAmount = (HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!) * 2).toStringAsFixed(2);
-      }
-      if(dList[index]["car_details"]["type"].toString() == "minivan") // non - executive car - comfortable normal
-          {
-        fareAmount = (HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!)).toString();
-      }
+      // if(dList[index]["car_details"]["type"].toString() == "minibus") //means executive type of car - more comfortable pro level
+      //     {
+      //   fareAmount = (HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!) * 2).toStringAsFixed(2);
+      // }
+      // if(dList[index]["car_details"]["type"].toString() == "minivan") // non - executive car - comfortable normal
+      //     {
+      //   fareAmount = (HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!)).toString();
+      // }
     }
     return fareAmount;
   }
@@ -62,6 +64,7 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
             widget.referenceRideRequest!.remove();
             Fluttertoast.showToast(msg:"You have cancelled the ride");
             SystemNavigator.pop();
+            //Navigator.pop(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
           },
         ),
       ),
@@ -120,9 +123,9 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "\$"+HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!).toString(),
+                      //"\$"+HelperMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!).toString(),
                       // ignore: prefer_interpolation_to_compose_strings
-                     // "\$"+ getFareAmountAccordingToVehicleType(index),
+                      "\$"+ getFareAmountAccordingToVehicleType(index),     //car type = car, half cost dest-origin. working as intended now
                       style:const  TextStyle(
                         fontWeight: FontWeight.bold,
                       ),

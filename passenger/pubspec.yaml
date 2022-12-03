@@ -49,6 +49,7 @@ dependencies:
 
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -74,7 +75,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/car_android.png
-    - images/car_ios.png
     - images/carpool.png
     - images/carpool1.png
     - images/desticon.png
@@ -88,9 +88,11 @@ flutter:
     - images/posimarker1.png
     - images/redmarker.png
     - images/user_icon.png
-    - images/Car.png
     - images/minivan.png
     - images/minibus.png
+    - images/Car.png
+    - images/destination.png
+    - images/origin.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

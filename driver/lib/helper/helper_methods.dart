@@ -41,9 +41,9 @@ class HelperMethods {
 
   static Future<DirectionDetailsInfo?>
       obtainOriginToDestinationDirectionDetails(
-          LatLng origionPosition, LatLng destinationPosition) async {
+          LatLng originPosition, LatLng destinationPosition) async {
     String urlOriginToDestinationDirectionDetails =
-        "https://maps.googleapis.com/maps/api/directions/json?origin=${origionPosition.latitude},${origionPosition.longitude}&destination=${destinationPosition.latitude},${destinationPosition.longitude}&key=$mapKey";
+        "https://maps.googleapis.com/maps/api/directions/json?origin=${originPosition.latitude},${originPosition.longitude}&destination=${destinationPosition.latitude},${destinationPosition.longitude}&key=$mapKey";
 
     var responseDirectionApi = await RequestHelper.receiveRequest(
         urlOriginToDestinationDirectionDetails);
@@ -80,23 +80,63 @@ class HelperMethods {
         driverCurrentPosition!.latitude, driverCurrentPosition!.longitude);
   }
 
+  // static double calculateFareAmountFromOriginToDestination(
+  //     DirectionDetailsInfo directionDetailsInfo) {
+  //   double timeTraveledFareAmountPerMinute =
+  //       (directionDetailsInfo.duration_value! / 60) * 0.1;
+  //   double distanceTraveledFareAmountPerMile =                          //KM-->Mile 1000-->5260
+  //       (directionDetailsInfo.duration_value! / 5280) * 0.1;
+  //
+  //   //USD
+  //   double totalFareAmount = timeTraveledFareAmountPerMinute +
+  //       distanceTraveledFareAmountPerMile;                        //mile
+  //
+  //   // if (driverVehicleType == "Car") {
+  //   //    totalFareAmount = (totalFareAmount.toStringAsFix()) / 2.0;
+  //   //   return totalFareAmount;
+  //   // // } else if (driverVehicleType == "Minivan") {
+  //   // //   return totalFareAmount.truncate().toDouble();
+  //   // // } else if (driverVehicleType == "Minibus") {
+  //   // //   double resultFareAmount = (totalFareAmount.truncate()) * 2.0;
+  //   // //   return resultFareAmount;
+  //   // } else {
+  //
+  //     return double.parse(totalFareAmount.toStringAsFixed(2));
+  //
+  // }
+
+  // static double calculateFareAmountFromOriginToDestination(
+  //     DirectionDetailsInfo directionDetailsInfo) {
+  //   double timeTraveledFareAmountPerMinute =
+  //       (directionDetailsInfo.duration_value! / 60) * 0.1; // $.1 per minute
+  //   double distanceTraveledFareAmountPerMile =
+  //       (directionDetailsInfo.duration_value! / 5280) *
+  //           0.1; // $.1 per mile distance_-->duration
+  //
+  //   //USD
+  //   double totalFareAmount =
+  //       timeTraveledFareAmountPerMinute + distanceTraveledFareAmountPerMile;
+  //
+  //   return double.parse(totalFareAmount.toStringAsFixed(2)); //round two two digits ex: 23.234= 23.23
+  // }
+
   static double calculateFareAmountFromOriginToDestination(
       DirectionDetailsInfo directionDetailsInfo) {
     double timeTraveledFareAmountPerMinute =
         (directionDetailsInfo.duration_value! / 60) * 0.1;
-    double distanceTraveledFareAmountPerKilometer =
-        (directionDetailsInfo.duration_value! / 1000) * 0.1;
+    double distanceTraveledFareAmountPerMile =
+        (directionDetailsInfo.duration_value! / 5280) * 0.1;
 
     //USD
-    double totalFareAmount = timeTraveledFareAmountPerMinute +
-        distanceTraveledFareAmountPerKilometer;
+    double totalFareAmount =
+        timeTraveledFareAmountPerMinute + distanceTraveledFareAmountPerMile;
 
-    if (driverVehicleType == "bike") {
+    if (driverVehicleType == "Car") {
       double resultFareAmount = (totalFareAmount.truncate()) / 2.0;
       return resultFareAmount;
-    } else if (driverVehicleType == "uber-go") {
+    } else if (driverVehicleType == "Minivan") {
       return totalFareAmount.truncate().toDouble();
-    } else if (driverVehicleType == "uber-x") {
+    } else if (driverVehicleType == "Minibus") {
       double resultFareAmount = (totalFareAmount.truncate()) * 2.0;
       return resultFareAmount;
     } else {
@@ -106,6 +146,7 @@ class HelperMethods {
 
   //retrieve the trips KEYS for online user
   //trip key = ride request key
+
   static void readTripsKeysForOnlineDriver(context) {
     FirebaseDatabase.instance
         .ref()
@@ -117,12 +158,12 @@ class HelperMethods {
       if (snap.snapshot.value != null) {
         Map keysTripsId = snap.snapshot.value as Map;
 
-        //count total number trips and share it with Provider
+//count total number trips and share it with Provider
         int overAllTripsCounter = keysTripsId.length;
         Provider.of<AppInfo>(context, listen: false)
             .updateOverAllTripsCounter(overAllTripsCounter);
 
-        //share trips keys with Provider
+//share trips keys with Provider
         List<String> tripsKeysList = [];
         keysTripsId.forEach((key, value) {
           tripsKeysList.add(key);
@@ -130,7 +171,7 @@ class HelperMethods {
         Provider.of<AppInfo>(context, listen: false)
             .updateOverAllTripsKeys(tripsKeysList);
 
-        //get trips keys data - read trips complete information
+//get trips keys data - read trips complete information
         readTripsHistoryInformation(context);
       }
     });
@@ -150,32 +191,32 @@ class HelperMethods {
         var eachTripHistory = TripsHistoryModel.fromSnapshot(snap.snapshot);
 
         if ((snap.snapshot.value as Map)["status"] == "ended") {
-          //update-add each history to OverAllTrips History Data List
+//update-add each history to OverAllTrips History Data List
           Provider.of<AppInfo>(context, listen: false)
-              .updateOverAllTripsHistoryInformation(eachTripHistory);
+                  .updateOverAllTripsHistoryInformation(eachTripHistory) /
+              2.0;
         }
       });
     }
   }
 
-  //readDriverEarnings
+//readDriverEarnings
 
-  // static void readDriverEarnings(context) {
-  //   FirebaseDatabase.instance
-  //       .ref()
-  //       .child("drivers")
-  //       .child(fAuth.currentUser!.uid)
-  //       .child("earnings")
-  //       .once()
-  //       .then((snap) {
-  //     if (snap.snapshot.value != null) {
-  //       String driverEarnings = snap.snapshot.value.toString();
-  //       Provider.of<AppInfo>(context, listen: false)
-  //           .updateDriverTotalEarnings(driverEarnings);
-  //     }
-  //   });
-  //
-  //   readTripsKeysForOnlineDriver(context);
-  // }
+  static void readDriverEarnings(context) {
+    FirebaseDatabase.instance
+        .ref()
+        .child("drivers")
+        .child(fAuth.currentUser!.uid)
+        .child("earnings")
+        .once()
+        .then((snap) {
+      if (snap.snapshot.value != null) {
+        String driverEarnings = snap.snapshot.value.toString();
+        Provider.of<AppInfo>(context, listen: false)
+            .updateDriverTotalEarnings(driverEarnings);
+      }
+    });
 
+    readTripsKeysForOnlineDriver(context);
+  }
 }

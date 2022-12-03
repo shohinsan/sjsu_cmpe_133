@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:driver/models/user_ride_request_information.dart';
+import 'package:driver/screens/home_tab.dart';
+import 'package:driver/splash/splash_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -133,7 +135,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
     Marker originMarker = Marker(
       markerId: const MarkerId("originID"),
       position: originLatLng,
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
     );
 
     Marker destinationMarker = Marker(
@@ -149,19 +151,19 @@ class _NewTripScreenState extends State<NewTripScreen> {
 
     Circle originCircle = Circle(
       circleId: const CircleId("originID"),
-      fillColor: Colors.green,
-      radius: 12,
-      strokeWidth: 3,
-      strokeColor: Colors.white,
+      fillColor: const Color(0xff095d61),
+      radius: 8,
+      strokeWidth: 2,
+      strokeColor: const Color(0xFF4FBDB6),
       center: originLatLng,
     );
 
     Circle destinationCircle = Circle(
       circleId: const CircleId("destinationID"),
-      fillColor: Colors.red,
-      radius: 12,
-      strokeWidth: 3,
-      strokeColor: Colors.white,
+      fillColor: const Color(0xff095d61),
+      radius: 8,
+      strokeWidth: 2,
+      strokeColor: const Color(0xFF4FBDB6),
       center: destinationLatLng,
     );
 
@@ -320,214 +322,222 @@ class _NewTripScreenState extends State<NewTripScreen> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(18),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.white30,
-                    blurRadius: 18,
-                    spreadRadius: .5,
-                    offset: Offset(0.6, 0.6),
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color(0xff095d61),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(18),
+                    topRight: Radius.circular(18),
+                    bottomLeft: Radius.circular(18),
+                    bottomRight: Radius.circular(18),
                   ),
-                ],
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                child: Column(
-                  children: [
-                    //duration
-                    Text(
-                      durationFromOriginToDestination,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.lightGreenAccent,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 18,
-                    ),
-
-                    const Divider(
-                      thickness: 2,
-                      height: 2,
-                      color: Colors.grey,
-                    ),
-
-                    const SizedBox(
-                      height: 8,
-                    ),
-
-                    //user name - icon
-                    Row(
-                      children: [
-                        Text(
-                          widget.userRideRequestDetails!.userName!,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.lightGreenAccent,
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Icon(
-                            Icons.phone_android,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(
-                      height: 18,
-                    ),
-
-                    //user PickUp Address with icon
-                    Row(
-                      children: [
-                        Image.asset(
-                          "images/origin.png",
-                          width: 30,
-                          height: 30,
-                        ),
-                        const SizedBox(
-                          width: 14,
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: Text(
-                              widget.userRideRequestDetails!.originAddress!,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 20.0),
-
-                    //user DropOff Address with icon
-                    Row(
-                      children: [
-                        Image.asset(
-                          "images/destination.png",
-                          width: 30,
-                          height: 30,
-                        ),
-                        const SizedBox(
-                          width: 14,
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: Text(
-                              widget
-                                  .userRideRequestDetails!.destinationAddress!,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    const Divider(
-                      thickness: 2,
-                      height: 2,
-                      color: Colors.grey,
-                    ),
-
-                    const SizedBox(height: 10.0),
-
-                    ElevatedButton.icon(
-                      onPressed: () async {
-                        //[driver has arrived at user PickUp Location] - Arrived Button
-                        if (rideRequestStatus == "accepted") {
-                          rideRequestStatus = "arrived";
-
-                          FirebaseDatabase.instance
-                              .ref()
-                              .child("All Ride Requests")
-                              .child(
-                                  widget.userRideRequestDetails!.rideRequestId!)
-                              .child("status")
-                              .set(rideRequestStatus);
-
-                          setState(() {
-                            buttonTitle = "Let's Go"; //start the trip
-                            buttonColor = Colors.lightGreen;
-                          });
-
-                          showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext c) => ProgressDialog(
-                              message: "Loading...",
-                            ),
-                          );
-
-                          await drawPolyLineFromOriginToDestination(
-                              widget.userRideRequestDetails!.originLatLng!,
-                              widget
-                                  .userRideRequestDetails!.destinationLatLng!);
-
-                          Navigator.pop(context);
-                        }
-                        //[user has already sit in driver's car. Driver start trip now] - Lets Go Button
-                        else if (rideRequestStatus == "arrived") {
-                          rideRequestStatus = "ontrip";
-
-                          FirebaseDatabase.instance
-                              .ref()
-                              .child("All Ride Requests")
-                              .child(
-                                  widget.userRideRequestDetails!.rideRequestId!)
-                              .child("status")
-                              .set(rideRequestStatus);
-
-                          setState(() {
-                            buttonTitle = "End Trip"; //end the trip
-                            buttonColor = Colors.redAccent;
-                          });
-                        }
-                        //[user/Driver reached to the dropOff Destination Location] - End Trip Button
-                        else if (rideRequestStatus == "ontrip") {
-                          endTripNow();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: buttonColor,
-                      ),
-                      icon: const Icon(
-                        Icons.directions_car,
-                        color: Colors.white,
-                        size: 25,
-                      ),
-                      label: Text(
-                        buttonTitle!,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.white,
+                      blurRadius: 18,
+                      spreadRadius: .5,
+                      offset: Offset(0.6, 0.6),
                     ),
                   ],
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+                  child: Column(
+                    children: [
+                      //duration
+                      Text(
+                        durationFromOriginToDestination,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 18,
+                      ),
+
+                      const Divider(
+                        thickness: 2,
+                        height: 2,
+                        color: Colors.white,
+                      ),
+
+                      const SizedBox(
+                        height: 8,
+                      ),
+
+                      //user name - icon
+                      Row(
+                        children: [
+                          Text(
+                            widget.userRideRequestDetails!.userName!,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Icon(
+                              Icons.phone_android,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(
+                        height: 18,
+                      ),
+
+                      //user PickUp Address with icon
+                      Row(
+                        children: [
+                          Image.asset(
+                            "images/origin.png",
+                            width: 30,
+                            height: 30,
+                          ),
+                          const SizedBox(
+                            width: 14,
+                          ),
+                          Expanded(
+                            child: Container(
+                              child: Text(
+                                widget.userRideRequestDetails!.originAddress!,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 20.0),
+
+                      //user DropOff Address with icon
+                      Row(
+                        children: [
+                          Image.asset(
+                            "images/destination.png",
+                            width: 30,
+                            height: 30,
+                          ),
+                          const SizedBox(
+                            width: 14,
+                          ),
+                          Expanded(
+                            child: Container(
+                              child: Text(
+                                widget.userRideRequestDetails!
+                                    .destinationAddress!,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(
+                        height: 24,
+                      ),
+
+                      const Divider(
+                        thickness: 2,
+                        height: 2,
+                        color: Colors.white,
+                      ),
+
+                      const SizedBox(height: 20.0),
+
+                      ElevatedButton.icon(
+                        onPressed: () async {
+                          // [Driver Has Arrived At User Pick Up Location] - Arrived Button
+                          if (rideRequestStatus == "accepted") {
+                            rideRequestStatus = "arrived";
+
+                            FirebaseDatabase.instance
+                                .ref()
+                                .child("All Ride Requests")
+                                .child(widget
+                                    .userRideRequestDetails!.rideRequestId!)
+                                .child("status")
+                                .set(rideRequestStatus);
+
+                            setState(() {
+                              buttonTitle = "Drive"; //start the trip
+                              buttonColor = Colors.lightGreen;
+                            });
+
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext c) => ProgressDialog(
+                                message: "Loading...",
+                              ),
+                            );
+
+                            await drawPolyLineFromOriginToDestination(
+                                widget.userRideRequestDetails!.originLatLng!,
+                                widget.userRideRequestDetails!
+                                    .destinationLatLng!);
+
+                            Navigator.pop(context);
+                          }
+                          //[user has already sit in driver's car. Driver start trip now] - Lets Go Button
+                          else if (rideRequestStatus == "arrived") {
+                            rideRequestStatus = "ontrip";
+
+                            FirebaseDatabase.instance
+                                .ref()
+                                .child("All Ride Requests")
+                                .child(widget
+                                    .userRideRequestDetails!.rideRequestId!)
+                                .child("status")
+                                .set(rideRequestStatus);
+
+                            setState(() {
+                              buttonTitle = "End Trip"; //end the trip
+                              buttonColor = Colors.redAccent;
+                            });
+                          }
+                          //[user/Driver reached to the dropOff Destination Location] - End Trip Button
+                          else if (rideRequestStatus == "ontrip") {
+                            endTripNow();
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: buttonColor,
+                          minimumSize: const Size.fromHeight(50),
+                        ),
+                        icon: const Icon(
+                          Icons.directions_car,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        label: Text(
+                          buttonTitle!,
+                          style: const TextStyle(
+
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -578,7 +588,10 @@ class _NewTripScreenState extends State<NewTripScreen> {
 
     streamSubscriptionDriverLivePosition!.cancel();
 
-    Navigator.pop(context);
+    // ignore: use_build_context_synchronously
+    // Navigator.pop(context);
+    // ignore: use_build_context_synchronously
+    Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
 
     //display fare amount in dialog box
     showDialog(
@@ -641,8 +654,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
     databaseReference.child("driverName").set(onlineDriverData.name);
     databaseReference.child("driverPhone").set(onlineDriverData.phone);
     databaseReference.child("car_details").set(
-        onlineDriverData.car_color.toString() +
-            onlineDriverData.car_model.toString());
+        "${onlineDriverData.car_color} ${onlineDriverData.car_model} ${onlineDriverData.car_number}");
 
     saveRideRequestIdToDriverHistory();
   }

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:driver/global/global.dart';
 import 'package:driver/push_notifications/push_notification_system.dart';
+import 'package:driver/screens/tabs_controller.dart';
+import 'package:driver/splash/splash_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,9 +37,6 @@ class _HomeTabPageState extends State<HomeTabPage>
   var geoLocator = Geolocator();
   LocationPermission? _locationPermission;
 
-  String statusText = "Now Offline";
-  Color buttonColor = Colors.grey;
-  bool isDriverActive = false;
 
   checkIfLocationPermissionAllowed() async
   {
@@ -96,6 +95,10 @@ class _HomeTabPageState extends State<HomeTabPage>
     PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
     pushNotificationSystem.initializeCloudMessaging(context);
     pushNotificationSystem.generateAndGetToken();
+
+
+
+    HelperMethods.readDriverEarnings(context);
   }
 
   @override
@@ -127,7 +130,7 @@ class _HomeTabPageState extends State<HomeTabPage>
           },
         ),
 
-        //ui for online offline driver
+        //UI for online offline driver
         statusText != "Now Online"
             ? Container(
           height: MediaQuery.of(context).size.height,
@@ -136,7 +139,7 @@ class _HomeTabPageState extends State<HomeTabPage>
         )
             : Container(),
 
-        //button for online offline driver
+        // Button For Online Offline Driver
         Positioned(
           top: statusText != "Now Online"
               ? MediaQuery.of(context).size.height * 0.46
@@ -226,7 +229,7 @@ class _HomeTabPageState extends State<HomeTabPage>
         .child(currentFirebaseUser!.uid)
         .child("newRideStatus");
 
-    ref.set("idle"); //searching for ride request
+    ref.set("idle"); // Searching For Ride Request
     ref.onValue.listen((event) { });
   }
 
@@ -269,8 +272,7 @@ class _HomeTabPageState extends State<HomeTabPage>
 
     Future.delayed(const Duration(milliseconds: 2000), ()
     {
-      //SystemChannels.platform.invokeMethod("SystemNavigator.pop");
-      SystemNavigator.pop();
+      Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
     });
   }
 }

@@ -1,5 +1,7 @@
 import 'package:driver/helper/helper_methods.dart';
 import 'package:driver/models/user_ride_request_information.dart';
+import 'package:driver/screens/home_tab.dart';
+import 'package:driver/splash/splash_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,13 +27,13 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
         borderRadius: BorderRadius.circular(24),
       ),
       backgroundColor: Colors.transparent,
-      elevation: 2,
+      elevation: 0,
       child: Container(
         margin: const EdgeInsets.all(8),
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.grey[800],
+          color: const Color(0xF2F2F9F9),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -55,7 +57,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
-                  color: Colors.grey),
+                  color: Colors.black),
             ),
 
             const SizedBox(height: 14.0),
@@ -70,7 +72,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  //origin location with icon
+                  // Origin Location
                   Row(
                     children: [
                       Image.asset(
@@ -82,13 +84,11 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         width: 14,
                       ),
                       Expanded(
-                        child: Container(
-                          child: Text(
-                            widget.userRideRequestDetails!.originAddress!,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
-                            ),
+                        child: Text(
+                          widget.userRideRequestDetails!.originAddress!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -97,7 +97,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
 
                   const SizedBox(height: 20.0),
 
-                  //destination location with icon
+                  // Destination Location
                   Row(
                     children: [
                       Image.asset(
@@ -109,13 +109,11 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         width: 14,
                       ),
                       Expanded(
-                        child: Container(
-                          child: Text(
-                            widget.userRideRequestDetails!.destinationAddress!,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
-                            ),
+                        child: Text(
+                          widget.userRideRequestDetails!.destinationAddress!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -130,7 +128,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
               thickness: 3,
             ),
 
-            //buttons cancel accept
+            // Buttons
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Row(
@@ -145,7 +143,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                       // audioPlayer.stop();
                       // audioPlayer = AssetsAudioPlayer();
 
-                      //cancel the rideRequest
+                      // Cancel Ride Request
                       FirebaseDatabase.instance
                           .ref()
                           .child("All Ride Requests")
@@ -170,11 +168,11 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                       }).then((value) {
                         Fluttertoast.showToast(
                             msg:
-                                "Ride Request has been Cancelled, Successfully. Restart App Now.");
+                                "Ride Request has been Cancelled, Successfully. We're sorry to see you go");
                       });
 
                       Future.delayed(const Duration(milliseconds: 3000), () {
-                        SystemNavigator.pop();
+                        Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
                       });
                     },
                     child: Text(

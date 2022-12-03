@@ -27,7 +27,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black54,
+        color: const Color(0xF2F2F9F9),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
@@ -40,7 +40,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                 Padding(
                   padding: const EdgeInsets.only(left: 6.0),
                   child: Text(
-                    "Driver : " + widget.tripsHistoryModel!.driverName!,
+                    "Driver : ${widget.tripsHistoryModel!.driverName!}",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -51,7 +51,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                   width: 12,
                 ),
                 Text(
-                  "\$ " + widget.tripsHistoryModel!.fareAmount!,
+                  "\$ ${widget.tripsHistoryModel!.fareAmount!}",
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -79,7 +79,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                   widget.tripsHistoryModel!.car_details!,
                   style: const TextStyle(
                     fontSize: 16,
-                    color: Colors.grey,
+                    color: const Color(0xF2F2F9F9),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -156,7 +156,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                 Text(
                   formatDateAndTime(widget.tripsHistoryModel!.time!),
                   style: const TextStyle(
-                    color: Colors.grey,
+                    color: Colors.black,
                   ),
                 ),
               ],

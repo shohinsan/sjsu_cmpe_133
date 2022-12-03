@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:passenger/widgets/place_prediction_tile.dart';
 
 class PredictedPlaces {
